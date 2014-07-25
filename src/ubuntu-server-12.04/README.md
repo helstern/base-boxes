@@ -1,0 +1,1 @@
+Prepares base box running ubuntu server 12.04
