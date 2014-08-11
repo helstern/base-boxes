@@ -133,9 +133,8 @@ d-i grub-installer/only_debian boolean true
 ### Finishing
 
 # download a script, and link it to be run on start up
-d-i preseed/late_command string in-target wget http://10.0.2.2:8581/late_command.sh -O /usr/local/bin/late_command.sh;  \
-                                in-target /bin/bash -x chmod 755 /usr/local/bin/late_command.sh \
-                                in-target /bin/bash -x /usr/local/bin/late_command.sh
+d-i preseed/late_command string in-target wget http://10.0.2.2:8581/late_command.sh -O /usr/local/bin/late_command.sh ; \
+ in-target bash /usr/local/bin/late_command.sh
 
 #   https://help.ubuntu.com/lts/installation-guide/i386/preseed-contents.html#preseed-finish
 #   Prevent automatic reboot
