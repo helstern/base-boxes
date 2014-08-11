@@ -80,8 +80,9 @@
             "override" : {
                 "virtualbox" : {
                     "scripts" : [
-                        "scripts/001-configure-network-interfaces.sh",
-                        "scripts/0002-install-virtualbox-guest-additions.sh"
+                        "scripts/001-upgrade-packages.sh",
+                        "scripts/002-configure-network-interfaces.sh",
+                        "scripts/003-install-virtualbox-guest-additions.sh"
                     ]
                 }
             }
@@ -92,7 +93,7 @@
             "override" : {
                 "virtualbox" : {
                     "scripts" : [
-                        "scripts/003-add-authorized-keys.sh"
+                        "scripts/004-add-authorized-keys.sh"
                     ]
                 }
             }
