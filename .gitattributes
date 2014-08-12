@@ -12,6 +12,7 @@
 # Explicitly declare text files you always want normalized and converted to native line endings on checkout.
 .gitattributes text
 .gitignore      text
+.json           text
 
 # Explicitly declare files that will always have LF line endings on checkout.
 # Example: *.sh text eol=lf
