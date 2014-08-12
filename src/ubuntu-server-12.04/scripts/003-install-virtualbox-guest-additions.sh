@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#do not set -e, vbox or umount might break
 set -x
 
 # check that script is running with elevated privileges
