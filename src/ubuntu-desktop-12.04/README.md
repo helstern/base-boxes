@@ -11,3 +11,5 @@ https://wiki.ubuntu.com/DesktopCDOptions
 More here: https://wiki.ubuntu.com/UbiquityAutomation
 some ubiquity selection http://pastebin.com/XVktvKue
 
+ubuntu-desktop is installed on top a ubuntu-server installation, ubiquity pre-seeding is not working yet
+
