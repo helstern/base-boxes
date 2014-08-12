@@ -1,27 +1,28 @@
 {
-    "description" : "standard ubuntu server 12.04 64 bits",
+    "description" : "standard ubuntu server 12.04 64 bits"
 
-    "variables": {
-        "ssh_username"  : "manager",
-        "ssh_password"  : "manager",
-        "hostname"      : "server-ubuntu-12.04",
-        "iso_url"       : "../../iso/ubuntu-12.04.4-server-amd64.iso"
-    },
+    ,"variables": {
+        "ssh_username"  : "manager"
+        ,"ssh_password"  : "manager"
+        ,"hostname"      : "server-ubuntu-12.04"
+        ,"iso_url"       : "../../iso/ubuntu-12.04.4-server-amd64.iso"
+        ,"build_id"       : "-{{timestamp}}"
+    }
 
-    "builders": [
+    ,"builders": [
         {
-            "name"              : "virtualbox",
+            "name"              : "virtualbox"
 
-            "type"              : "virtualbox-iso",
-            "iso_checksum"      : "",
-            "iso_checksum_type" : "none",
-            "iso_url"           : "{{user `iso_url`}}",
+            ,"type"              : "virtualbox-iso"
+            ,"iso_checksum"      : ""
+            ,"iso_checksum_type" : "none"
+            ,"iso_url"           : "{{user `iso_url`}}"
 
-            "ssh_username"      : "{{user `ssh_username`}}",
-            "ssh_password"      : "{{user `ssh_password`}}",
-            "ssh_wait_timeout"  : "40m",
+            ,"ssh_username"      : "{{user `ssh_username`}}"
+            ,"ssh_password"      : "{{user `ssh_password`}}"
+            ,"ssh_wait_timeout"  : "40m"
 
-            "boot_command"      : [
+            ,"boot_command"      : [
                 "<esc><esc><esc><esc><enter><wait>",
                 " /install/vmlinuz initrd=/install/initrd.gz",
                 " auto url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/standard.clean.seed",
@@ -31,66 +32,66 @@
                 " DEBCONF_DEBUG=5",
                 " quiet splash noprompt --",
                 "<enter>"
-            ],
-            "boot_wait"         : "4s",
+            ]
+            ,"boot_wait"         : "4s"
 
-            "disk_size"         : "8192",
-            "export_opts"       : [],
-            "floppy_files"      : [],
-            "format"            : "ovf",
+            ,"disk_size"         : "8192"
+            ,"export_opts"       : []
+            ,"floppy_files"      : []
+            ,"format"            : "ovf"
 
-            "guest_additions_mode"  : "upload",
+            ,"guest_additions_mode"  : "upload"
 
-            "guest_os_type"         : "Ubuntu_64",
-            "hard_drive_interface"  : "sata",
+            ,"guest_os_type"         : "Ubuntu_64"
+            ,"hard_drive_interface"  : "sata"
 
-            "headless"              : false,
+            ,"headless"              : false
 
-            "http_directory"        : "http",
-            "http_port_min"         : 8581,
-            "http_port_max"         : 8581,
+            ,"http_directory"        : "http"
+            ,"http_port_min"         : 8581
+            ,"http_port_max"         : 8581
 
-            "ssh_port"                  : 22,
-            "ssh_host_port_min"         : 9450,
-            "ssh_host_port_max"         : 9450,
+            ,"ssh_port"                  : 22
+            ,"ssh_host_port_min"         : 9450
+            ,"ssh_host_port_max"         : 9450
 
-            "output_directory"          : "output/{{user `hostname`}}",
+            ,"output_directory"          : "output/{{user `hostname`}}"
 
-            "shutdown_command"          : "echo {{user `ssh_password`}} | sudo -S shutdown -P now",
-            "shutdown_timeout"          : "5m",
+            ,"shutdown_command"          : "echo {{user `ssh_password`}} | sudo -S shutdown -P now"
+            ,"shutdown_timeout"          : "5m"
 
-            "vboxmanage"                : [
-                ["modifyvm", "{{.Name}}", "--memory", "1024"],
-                ["modifyvm", "{{.Name}}", "--accelerate3d", "on"],
-                ["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"],
-                ["modifyvm", "{{.Name}}", "--nic2", "bridged"],
-                ["modifyvm", "{{.Name}}", "--bridgeadapter2", "Atheros AR5BWB222 Wireless Network Adapter"]
-            ],
-            "vboxmanage_post"           : [],
+            ,"vboxmanage"                : [
+                ["modifyvm", "{{.Name}}", "--memory", "1024"]
+                ,["modifyvm", "{{.Name}}", "--accelerate3d", "on"]
+                ,["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"]
+                ,["modifyvm", "{{.Name}}", "--nic2", "bridged"]
+                ,["modifyvm", "{{.Name}}", "--bridgeadapter2", "Atheros AR5BWB222 Wireless Network Adapter"]
+            ]
+            ,"vboxmanage_post"           : []
 
-            "virtualbox_version_file"   : "build.version.virtualbox",
-            "vm_name"                   : "{{user `hostname`}}"
+            ,"virtualbox_version_file"   : "build.version.virtualbox"
+            ,"vm_name"                   : "{{user `hostname`}}"
           }
-    ],
+    ]
 
-    "provisioners": [
+    ,"provisioners": [
         {
-            "type" : "shell",
-            "execute_command": "echo {{user `ssh_password`}} | sudo -S bash '{{.Path}}'",
-            "override" : {
+            "type" : "shell"
+            ,"execute_command": "echo {{user `ssh_password`}} | sudo -S bash '{{.Path}}'"
+            ,"override" : {
                 "virtualbox" : {
                     "scripts" : [
-                        "scripts/001-upgrade-packages.sh",
-                        "scripts/002-configure-network-interfaces.sh",
-                        "scripts/003-install-virtualbox-guest-additions.sh"
+                        "scripts/001-upgrade-packages.sh"
+                        ,"scripts/002-configure-network-interfaces.sh"
+                        ,"scripts/003-install-virtualbox-guest-additions.sh"
                     ]
                 }
             }
-        },
-        {
-            "type" : "shell",
-            "execute_command": "bash '{{.Path}}'",
-            "override" : {
+        }
+        ,{
+            "type" : "shell"
+            ,"execute_command": "bash '{{.Path}}'"
+            ,"override" : {
                 "virtualbox" : {
                     "scripts" : [
                         "scripts/004-add-authorized-keys.sh"
