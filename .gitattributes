@@ -13,6 +13,7 @@
 .gitattributes text
 .gitignore      text
 .json           text
+.md             text
 
 # Explicitly declare files that will always have LF line endings on checkout.
 # Example: *.sh text eol=lf
