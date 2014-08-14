@@ -14,7 +14,7 @@ mkdir -p /etc/network/interfaces.d
 mv /etc/network/interfaces /etc/network/interfaces.bak
 
 # remove generated net rules because importing the appliance will attach network cards with different macs
-rm -f /etc/udev/rules.d/70-persistent-net.rules
+# rm -f /etc/udev/rules.d/70-persistent-net.rules
 
 #loopback interface
 cat <<INTERFACES > /etc/network/interfaces

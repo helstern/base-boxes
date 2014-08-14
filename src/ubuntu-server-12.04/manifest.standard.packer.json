@@ -14,7 +14,6 @@
             "name"              : "virtualbox"
 
             ,"type"              : "virtualbox-iso"
-            ,"iso_checksum"      : ""
             ,"iso_checksum_type" : "none"
             ,"iso_url"           : "{{user `iso_url`}}"
 
@@ -55,7 +54,7 @@
             ,"ssh_host_port_min"         : 9450
             ,"ssh_host_port_max"         : 9450
 
-            ,"output_directory"          : "output/{{user `hostname`}}"
+            ,"output_directory"          : "output/{{user `hostname`}}{{user `build_id`}}"
 
             ,"shutdown_command"          : "echo {{user `ssh_password`}} | sudo -S shutdown -P now"
             ,"shutdown_timeout"          : "5m"
@@ -81,20 +80,28 @@
             ,"override" : {
                 "virtualbox" : {
                     "scripts" : [
-                        "scripts/001-upgrade-packages.sh"
-                        ,"scripts/002-configure-network-interfaces.sh"
-                        ,"scripts/003-install-virtualbox-guest-additions.sh"
+                        "scripts/001-users.sh"
+                        ,"scripts/001-packages.sh"
+                        ,"scripts/002-network-interfaces.sh"
+                        ,"scripts/003-authorized-keys.sh"
                     ]
                 }
             }
         }
         ,{
             "type" : "shell"
-            ,"execute_command": "bash '{{.Path}}'"
+            ,"inline" : [
+                "echo {{user `ssh_password`}} | sudo -S shutdown -r now"
+                ,"echo {{user `ssh_password`}} | sudo -S sleep 60"
+            ]
+        }
+        ,{
+            "type" : "shell"
+            ,"execute_command": "echo {{user `ssh_password`}} | sudo -S bash '{{.Path}}'"
             ,"override" : {
-                "virtualbox" : {
-                    "scripts" : [
-                        "scripts/004-add-authorized-keys.sh"
+                "virtualbox": {
+                    "scripts": [
+                        "scripts/004-virtualbox-guest-additions.sh"
                     ]
                 }
             }
