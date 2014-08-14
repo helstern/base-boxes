@@ -5,3 +5,6 @@ packer build --var "build_id=" manifest.standard.packer.json
 
 build unique build
 packer build manifest.standard.packer.json
+
+one-line vagrant 
+packer build --var "build_id=" manifest.standard.packer.json && packer build manifest.vagrant.packer.json
