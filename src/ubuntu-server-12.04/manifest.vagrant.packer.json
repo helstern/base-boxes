@@ -20,6 +20,7 @@
             ,"shutdown_timeout"          : "5m"
 
             ,"output_directory" : "output/tmp-{{timestamp}}"
+            ,"import_opts" : "keepallmacs"
         }
     ]
 
