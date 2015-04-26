@@ -64,7 +64,7 @@
                 ,["modifyvm", "{{.Name}}", "--accelerate3d", "on"]
                 ,["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"]
                 ,["modifyvm", "{{.Name}}", "--nic2", "bridged"]
-                ,["modifyvm", "{{.Name}}", "--bridgeadapter2", "Atheros AR5BWB222 Wireless Network Adapter"]
+                ,["modifyvm", "{{.Name}}", "--bridgeadapter2", "wlan0"]
             ]
             ,"vboxmanage_post"           : []
 
