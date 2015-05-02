@@ -63,7 +63,7 @@
             ,"shutdown_timeout"          : "5m"
 
             ,"qemu_binary"               : "qemu-system-x86_64"
-            ,"vm_name"                   : "jenkins-ci"
+            ,"vm_name"                   : "server-ubuntu-12.04"
           }
     ]
 
