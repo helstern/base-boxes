@@ -62,7 +62,7 @@
             ,"ssh_host_port_min"         : 9450
             ,"ssh_host_port_max"         : 9450
 
-            ,"output_directory"          : "output/{{user `hostname`}}{{user `build_id`}}"
+            ,"output_directory"          : "../../target/{{user `hostname`}}{{user `build_id`}}"
 
             ,"shutdown_command"          : "echo {{user `ssh_password`}} | sudo -S shutdown -P now"
             ,"shutdown_timeout"          : "5m"
