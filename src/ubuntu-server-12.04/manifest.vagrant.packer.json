@@ -4,7 +4,7 @@
     ,"variables": {
         "ssh_username"  : "manager"
         ,"ssh_password"  : "manager"
-        ,"build_name"    : "server-ubuntu-12.04"
+        ,"build_name"    : "ubuntu-server-12.04"
     }
 
     ,"builders": [

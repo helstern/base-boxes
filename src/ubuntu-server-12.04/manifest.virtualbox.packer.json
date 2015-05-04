@@ -4,7 +4,7 @@
     ,"variables": {
         "ssh_username"  : "manager"
         ,"ssh_password"  : "manager"
-        ,"hostname"      : "server-ubuntu-12.04"
+        ,"hostname"      : "ubuntu-server-12.04"
         ,"iso_url"       : "../../iso/ubuntu-12.04.4-server-amd64.iso"
         ,"build_id"       : "-{{timestamp}}"
     }
