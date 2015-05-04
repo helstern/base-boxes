@@ -1,0 +1,36 @@
+{
+    "description" : "vagrant box builder for ubuntu server 14.04 64 bits"
+
+    ,"variables": {
+        "ssh_username"  : "manager"
+        ,"ssh_password"  : "manager"
+        ,"build_name"    : "ubuntu-server-14.04"
+    }
+
+    ,"builders": [
+        {
+            "type": "virtualbox-ovf"
+            ,"source_path": "../../target/{{user `build_name`}}/{{user `build_name`}}.ovf"
+
+            ,"ssh_username"      : "{{user `ssh_username`}}"
+            ,"ssh_password"      : "{{user `ssh_password`}}"
+            ,"ssh_wait_timeout"  : "30s"
+
+            ,"shutdown_command"          : "echo {{user `ssh_password`}} | sudo -S shutdown -P now"
+            ,"shutdown_timeout"          : "5m"
+
+            ,"output_directory" : "../../target/tmp-{{timestamp}}"
+            ,"import_opts" : "keepallmacs"
+        }
+    ]
+
+    ,"post-processors": [
+        {
+            "type" : "vagrant"
+            ,"compression_level" : 6
+            ,"include" : []
+            ,"keep_input_artifact" : false
+            ,"output" : "../../target/{{user `build_name`}}_{{.Provider}}.box"
+        }
+    ]
+}

@@ -1,0 +1,119 @@
+{
+    "description" : "standard ubuntu server 14.04 64 bits"
+
+    ,"variables": {
+        "ssh_username"  : "manager"
+        ,"ssh_password"  : "manager"
+        ,"hostname"      : "ubuntu-server-14.04"
+        ,"iso_url"       : "../../iso/ubuntu-14.04.2-server-amd64.iso"
+        ,"build_id"       : "-{{timestamp}}"
+        ,"bridged_network" : "wlan0"
+    }
+
+    ,"builders": [
+        {
+            "name"              : "virtualbox"
+
+            ,"type"              : "virtualbox-iso"
+            ,"iso_checksum_type" : "none"
+            ,"iso_url"           : "{{user `iso_url`}}"
+
+            ,"ssh_username"      : "{{user `ssh_username`}}"
+            ,"ssh_password"      : "{{user `ssh_password`}}"
+            ,"ssh_wait_timeout"  : "40m"
+
+            ,"boot_command"      : [
+                "<esc><esc><esc><esc><enter><wait>"
+                ," /install/vmlinuz initrd=/install/initrd.gz"
+
+                ," auto url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/standard.with-commands.seed"
+                ," packer/late-command=http://{{ .HTTPIP }}:{{ .HTTPPort }}/late-command-virtualbox.sh"
+
+                ," hostname={{user `hostname`}} netcfg/choose_interface=auto"
+
+                ," passwd/user-fullname={{user `ssh_username`}} passwd/username={{user `ssh_username`}}"
+                ," passwd/user-password={{user `ssh_password`}} passwd/user-password-again={{user `ssh_password`}} "
+
+                ," debian-installer=en_GB locale=en_GB keymap=se"
+                ," debconf/frontend=noninteractive"
+
+                ," fb=false"
+                ," DEBCONF_DEBUG=5 quiet splash noprompt --"
+                ,"<enter>"
+            ]
+            ,"boot_wait"         : "4s"
+
+            ,"disk_size"         : "8192"
+            ,"export_opts"       : []
+            ,"floppy_files"      : []
+            ,"format"            : "ovf"
+
+            ,"guest_additions_mode"  : "upload"
+
+            ,"guest_os_type"         : "Ubuntu_64"
+            ,"hard_drive_interface"  : "sata"
+
+            ,"headless"              : false
+
+            ,"http_directory"        : "http"
+            ,"http_port_min"         : 8581
+            ,"http_port_max"         : 8581
+
+            ,"ssh_port"                  : 22
+            ,"ssh_host_port_min"         : 9450
+            ,"ssh_host_port_max"         : 9450
+
+            ,"output_directory"          : "../../target/{{user `hostname`}}{{user `build_id`}}"
+
+            ,"shutdown_command"          : "echo {{user `ssh_password`}} | sudo -S shutdown -P now"
+            ,"shutdown_timeout"          : "5m"
+
+            ,"vboxmanage"                : [
+                ["modifyvm", "{{.Name}}", "--memory", "1024"]
+                ,["modifyvm", "{{.Name}}", "--accelerate3d", "on"]
+                ,["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"]
+                ,["modifyvm", "{{.Name}}", "--nic2", "bridged"]
+                ,["modifyvm", "{{.Name}}", "--bridgeadapter2", "{{user `bridged_network`}}"]
+            ]
+            ,"vboxmanage_post"           : []
+
+            ,"virtualbox_version_file"   : "build.version.virtualbox"
+            ,"vm_name"                   : "{{user `hostname`}}"
+          }
+    ]
+
+    ,"provisioners": [
+        {
+            "type" : "shell"
+            ,"execute_command": "echo {{user `ssh_password`}} | sudo -S bash '{{.Path}}'"
+            ,"override" : {
+                "virtualbox" : {
+                    "scripts" : [
+                        "scripts/001-users.sh"
+                        ,"scripts/001-packages.sh"
+                        ,"scripts/002-network-interfaces.sh"
+                        ,"scripts/003-authorized-keys.sh"
+                    ]
+                }
+            }
+        }
+        ,{
+            "type" : "shell"
+            ,"inline" : [
+                "echo {{user `ssh_password`}} | sudo -S shutdown -r now"
+                ,"echo {{user `ssh_password`}} | sudo -S sleep 60"
+            ]
+        }
+        ,{
+            "type" : "shell"
+            ,"execute_command": "echo {{user `ssh_password`}} | sudo -S bash '{{.Path}}'"
+            ,"override" : {
+                "virtualbox": {
+                    "scripts": [
+                        "scripts/004-virtualbox-guest-additions.sh"
+                    ]
+                }
+            }
+        }
+    ]
+}
