@@ -5,7 +5,7 @@
         "ssh_username"  : "manager"
         ,"ssh_password"  : "manager"
         ,"hostname"      : "ubuntu-server-14.04"
-        ,"iso_url"       : "../../iso/ubuntu-14.04.2-server-amd64.iso"
+        ,"iso_url"       : "../../iso/ubuntu-14.04-server-amd64.iso"
         ,"build_id"       : "-{{timestamp}}"
         ,"bridged_network" : "wlan0"
     }
