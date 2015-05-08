@@ -6,7 +6,7 @@
         ,"ssh_password"   : "manager"
         ,"iso_url"        : ""
         ,"build_name"     : "ubuntu-server-14.04"
-        ,"build_id"       : "-{{timestamp}}"
+        ,"build_id"       : "{{timestamp}}"
     }
 
     ,"builders": [
@@ -39,7 +39,7 @@
             ,"ssh_host_port_min"         : 9450
             ,"ssh_host_port_max"         : 9450
 
-            ,"output_directory"          : "../../target/vagrant-{{user `build_name`}}{{user `build_id`}}"
+            ,"output_directory"          : "../../target/vagrant-{{user `build_name`}}-{{user `build_id`}}"
 
             ,"shutdown_command"          : "echo {{user `ssh_password`}} | sudo -S shutdown -P now; echo {{user `ssh_password`}} | sudo -S sleep 60"
             ,"shutdown_timeout"          : "5m"

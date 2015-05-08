@@ -6,7 +6,7 @@
         ,"ssh_password"  : "manager"
         ,"hostname"      : "ubuntu-server-12.04"
         ,"iso_url"       : "../../iso/ubuntu-12.04.4-server-amd64.iso"
-        ,"build_id"       : "-{{timestamp}}"
+        ,"build_id"       : "{{timestamp}}"
     }
 
     ,"builders": [
@@ -57,7 +57,7 @@
             ,"ssh_host_port_min"         : 9450
             ,"ssh_host_port_max"         : 9450
 
-            ,"output_directory"          : "../../target/{{user `hostname`}}{{user `build_id`}}"
+            ,"output_directory"          : "../../target/{{user `hostname`}}-{{user `build_id`}}"
 
             ,"shutdown_command"          : "echo {{user `ssh_password`}} | sudo -S shutdown -P now; echo {{user `ssh_password`}} | sudo -S sleep 60"
             ,"shutdown_timeout"          : "5m"

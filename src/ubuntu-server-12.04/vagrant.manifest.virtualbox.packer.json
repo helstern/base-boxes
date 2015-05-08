@@ -5,12 +5,14 @@
         "ssh_username"  : "manager"
         ,"ssh_password"  : "manager"
         ,"build_name"    : "ubuntu-server-12.04"
+        ,"build_id"       : "{{timestamp}}"
+        ,"source_path"   : ""
     }
 
     ,"builders": [
         {
-            "type": "virtualbox-ovf"
-            ,"source_path": "../../target/{{user `build_name`}}/{{user `build_name`}}.ovf"
+            "type"          : "virtualbox-ovf"
+            ,"source_path"  : "{{user `source_path`}}"
 
             ,"ssh_username"      : "{{user `ssh_username`}}"
             ,"ssh_password"      : "{{user `ssh_password`}}"
@@ -30,7 +32,7 @@
             ,"compression_level" : 6
             ,"include" : []
             ,"keep_input_artifact" : false
-            ,"output" : "../../target/{{user `build_name`}}_{{.Provider}}.box"
+            ,"output" : "../../target/vagrant-{{.Provider}}-{{user `build_name`}}-{{user `build_id`}}.box"
         }
     ]
 }
