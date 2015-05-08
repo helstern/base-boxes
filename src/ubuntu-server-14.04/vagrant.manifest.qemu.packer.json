@@ -2,16 +2,17 @@
     "description" : "vagrant box builder for ubuntu server 14.04 64 bits with libvirt as provider"
 
     ,"variables": {
-        "ssh_username"  : "manager"
-        ,"ssh_password"  : "manager"
-        ,"iso_url"       : ""
-        ,"build_name"      : "ubuntu-server-14.04"
+        "ssh_username"    : "manager"
+        ,"ssh_password"   : "manager"
+        ,"iso_url"        : ""
+        ,"build_name"     : "ubuntu-server-14.04"
         ,"build_id"       : "-{{timestamp}}"
     }
 
     ,"builders": [
         {
             "disk_image"         : true
+            ,"headless"          : true
 
             ,"type"              : "qemu"
             ,"format"            : "qcow2"
@@ -29,8 +30,6 @@
             ,"machine_type"      : "pc"
 
             ,"boot_wait"         : "4s"
-
-            ,"headless"              : true
 
             ,"http_directory"        : "http"
             ,"http_port_min"         : 8581

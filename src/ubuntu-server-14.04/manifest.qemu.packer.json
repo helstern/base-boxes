@@ -11,7 +11,9 @@
 
     ,"builders": [
         {
-            "type"              : "qemu"
+            "headless"              : false
+
+            ,"type"              : "qemu"
             ,"format"            : "qcow2"
             ,"accelerator"       : "kvm"
             ,"disk_size"         : "8192"
@@ -46,8 +48,6 @@
                 ," <enter>"
             ]
             ,"boot_wait"         : "4s"
-
-            ,"headless"              : false
 
             ,"http_directory"        : "http"
             ,"http_port_min"         : 8581
