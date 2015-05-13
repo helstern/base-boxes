@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -xu
 
-check_requirements() {
+check_dependencies() {
     if ! which jq > /dev/null 2>&1 ; then
         echo 'script has unmet dependencies: jq'
         exit 1
@@ -40,7 +40,7 @@ isabspath(){
     [[ "$path" =~ ^/.* ]]
 }
 
-check_requirements
+check_dependencies
 
 if [ -z "$1" ]; then
     usage
