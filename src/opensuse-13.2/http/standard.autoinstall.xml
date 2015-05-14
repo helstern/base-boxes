@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE profile>
-<!-- based on https://github.com/crowbar/crowbar/blob/master/opensuse-13.1-extra/autoinst.xml -->
-<profile xmlns:config="http://www.suse.com/1.0/configns" xmlns="http://www.suse.com/1.0/yast2ns">
+
+<!-- http://doc.opensuse.org/projects/autoyast/configuration.html -->
+
+<profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
     <add-on>
         <add_on_products config:type="list">
             <listentry>
@@ -23,20 +25,41 @@
     </add-on>
 
     <general>
-        <ask-list config:type="list"/>
-        <proposals config:type="list"/>
         <mode>
             <confirm config:type="boolean">false</confirm>
-            <final_halt config:type="boolean">false</final_halt>
+            <forceboot config:type="boolean">true</forceboot>
             <final_reboot config:type="boolean">false</final_reboot>
-            <halt config:type="boolean">false</halt>
-            <second_stage config:type="boolean">true</second_stage>
         </mode>
     </general>
+    <report>
+        <messages>
+            <show config:type="boolean">false</show>
+            <timeout config:type="integer">10</timeout>
+            <log config:type="boolean">true</log>
+        </messages>
+        <warnings>
+            <show config:type="boolean">false</show>
+            <timeout config:type="integer">10</timeout>
+            <log config:type="boolean">true</log>
+        </warnings>
+        <errors>
+            <show config:type="boolean">false</show>
+            <timeout config:type="integer">10</timeout>
+            <log config:type="boolean">true</log>
+        </errors>
+    </report>
 
-    <bootloader>
-        <loader_type>grub2</loader_type>
-    </bootloader>
+    <keyboard>
+        <keymap>english-uk</keymap>
+    </keyboard>
+    <language>
+        <language>en_GB</language>
+        <languages>en_GB</languages>
+    </language>
+    <timezone>
+        <hwclock>UTC</hwclock>
+        <timezone>Europe/London</timezone>
+    </timezone>
 
     <partitioning config:type="list">
         <drive>
@@ -62,15 +85,13 @@
             <use>all</use>
         </drive>
     </partitioning>
-    <firewall>
-        <enable_firewall config:type="boolean">false</enable_firewall>
-        <start_firewall config:type="boolean">false</start_firewall>
-    </firewall>
-    <deploy_image>
-        <image_installation config:type="boolean">false</image_installation>
-    </deploy_image>
+
+    <bootloader>
+        <loader_type>grub2</loader_type>
+    </bootloader>
 
     <networking>
+        <ipv6 config:type="boolean">false</ipv6>
         <keep_install_network config:type="boolean">false</keep_install_network>
         <dns>
             <dhcp_hostname config:type="boolean">false</dhcp_hostname>
@@ -85,17 +106,71 @@
         </interfaces>
     </networking>
 
-    <user_defaults>
-        <expire/>
-        <group>100</group>
-        <groups/>
-        <home>/home</home>
-        <inactive>-1</inactive>
-        <no_groups config:type="boolean">true</no_groups>
-        <shell>/bin/bash</shell>
-        <skel>/etc/skel</skel>
-        <umask>022</umask>
-    </user_defaults>
+    <firewall>
+        <enable_firewall config:type="boolean">false</enable_firewall>
+        <start_firewall config:type="boolean">false</start_firewall>
+    </firewall>
+
+    <software>
+        <image/>
+        <instsource>http://download.opensuse.org/distribution/13.2/repo/oss/</instsource>
+        <do_online_update config:type="boolean">true</do_online_update>
+        <kernel>kernel-default</kernel>
+        <patterns config:type="list">
+            <pattern>base</pattern>
+        </patterns>
+        <packages config:type="list">
+            <package>acpi</package>
+            <package>acpid</package>
+            <package>autoyast2-installation</package>
+            <package>autoyast2</package>
+            <package>bash</package>
+            <package>bundle-lang-common-en</package>
+            <package>e2fsprogs</package>
+            <package>gcc</package>
+            <package>glibc-locale</package>
+            <package>grub2</package>
+            <package>iproute2</package>
+            <package>iputils</package>
+            <package>kernel-default</package>
+            <package>kernel-default-devel</package>
+            <package>make</package>
+            <package>ntp</package>
+            <package>openssh</package>
+            <package>procps</package>
+            <package>puppet</package>
+            <package>sudo</package>
+            <package>vim-data</package>
+            <package>wget</package>
+            <package>zypper</package>
+            <package>yast2-hardware-detection</package>
+            <package>yast2-users</package>
+            <package>yast2-installation</package>
+            <package>yast2-network</package>
+            <package>yast2-theme-openSUSE</package>
+        </packages>
+        <remove-packages config:type="list">
+            <package>desktop-translations</package>
+            <package>kernel-firmware</package>
+            <package>virtualbox-guest-kmp-default</package>
+            <package>virtualbox-guest-tools</package>
+            <package>yast2-branding-openSUSE</package>
+        </remove-packages>
+    </software>
+
+    <runlevel>
+        <default>3</default>
+        <services config:type="list">
+            <service>
+                <service_name>ntp</service_name>
+                <service_status>enable</service_status>
+            </service>
+            <service>
+                <service_name>sshd</service_name>
+                <service_status>enable</service_status>
+            </service>
+        </services>
+    </runlevel>
 
     <groups config:type="list">
         <group>
@@ -108,100 +183,44 @@
         </group>
     </groups>
 
+    <user_defaults>
+        <expire/>
+        <group>100</group>
+        <groups/>
+        <home>/home</home>
+        <inactive>-1</inactive>
+        <no_groups config:type="boolean">true</no_groups>
+        <shell>/bin/bash</shell>
+        <skel>/etc/skel</skel>
+        <umask>022</umask>
+    </user_defaults>
+
     <users config:type="list">
         <user>
-            <encrypted config:type="boolean">false</encrypted>
-            <user_password>manager</user_password>
-            <username>manager</username>
-            <home>/home/manager</home>
-            <grouplist>manager</grouplist>
-            <shell>/bin/bash</shell>
+            <user_password>root</user_password>
+            <username>root</username>
         </user>
         <user>
-            <encrypted config:type="boolean">false</encrypted>
-            <fullname>root</fullname>
-            <username>root</username>
-            <user_password>root</user_password>
-            <gid>0</gid>
-            <uid>0</uid>
-            <home>/root</home>
+            <fullname>manager</fullname>
+            <gid>100</gid>
+            <home>/home/manager</home>
             <password_settings>
-                <expire></expire>
-                <flag></flag>
-                <inact></inact>
-                <max></max>
-                <min></min>
-                <warn></warn>
+                <expire/>
+                <flag/>
+                <inact>-1</inact>
+                <max>99999</max>
+                <min>0</min>
+                <warn>7</warn>
             </password_settings>
             <shell>/bin/bash</shell>
+            <uid>1000</uid>
+            <user_password>manager</user_password>
+            <username>manager</username>
         </user>
     </users>
-
-    <timezone>
-        <hwclock>UTC</hwclock>
-        <timezone>Europe/London</timezone>
-    </timezone>
-    <keyboard>
-        <keymap>english-uk</keymap>
-    </keyboard>
-    <language>
-        <language>en_GB</language>
-        <languages>en_US en_GB</languages>
-    </language>
-    <report>
-        <errors>
-            <log config:type="boolean">true</log>
-            <show config:type="boolean">true</show>
-            <timeout config:type="integer">0</timeout>
-        </errors>
-        <messages>
-            <log config:type="boolean">true</log>
-            <show config:type="boolean">true</show>
-            <timeout config:type="integer">0</timeout>
-        </messages>
-        <warnings>
-            <log config:type="boolean">true</log>
-            <show config:type="boolean">true</show>
-            <timeout config:type="integer">0</timeout>
-        </warnings>
-        <yesno_messages>
-            <log config:type="boolean">true</log>
-            <show config:type="boolean">true</show>
-            <timeout config:type="integer">0</timeout>
-        </yesno_messages>
-    </report>
-
-    <software>
-        <image/>
-        <instsource/>
-        <patterns config:type="list">
-            <pattern>sw_management</pattern>
-            <pattern>yast2_install_wf</pattern>
-            <pattern>minimal_base</pattern>
-        </patterns>
-        <packages config:type="list">
-            <package>grub2</package>
-            <package>iputils</package>
-            <package>kernel-default</package>
-            <package>less</package>
-            <package>vim</package>
-            <package>sudo</package>
-            <package>screen</package>
-            <package>yast2</package>
-            <package>yast2-firstboot</package>
-            <package>yast2-trans-en_US</package>
-            <package>yast2-trans-en_GB</package>
-            <package>zypper</package>
-            <package>wget</package>
-            <package>curl</package>
-            <package>iproute2</package>
-            <package>openssh</package>
-            <package>e2fsprogs</package>
-            <package>acpi</package>
-            <package>acpid</package>
-        </packages>
-    </software>
-
+    <kdump>
+        <add_crash_kernel config:type="boolean">false</add_crash_kernel>
+    </kdump>
 
     <scripts>
         <chroot-scripts config:type="list">
@@ -226,7 +245,7 @@ sed -i -e '/Defaults\s\+env_reset/a Defaults\texempt_group=wheel' /etc/sudoers
 echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 usermod -G wheel -a manager
 rm /etc/sysconfig/network/ifcfg-enp*
-service wicked restart
+
 service sshd restart
 ]]></source>
             </script>
