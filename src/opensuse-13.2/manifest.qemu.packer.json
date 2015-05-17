@@ -4,7 +4,7 @@
     ,"variables": {
         "ssh_username"  : "manager"
         ,"ssh_password"  : "manager"
-        ,"hostname"      : "opensuse-server-harlequin"
+        ,"hostname"      : "opensuse-harlequin-server"
         ,"network"       : "wlan0"
         ,"iso_url"       : "../../iso/openSUSE-13.2-DVD-x86_64.iso"
         ,"build_id"       : "-{{timestamp}}"
