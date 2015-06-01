@@ -126,7 +126,7 @@ if [ ! -f "${VAGRANT_QEMU_ARTIFACT}" ]; then
 fi
 
 echo "converting ${VAGRANT_QEMU_ARTIFACT} to a vagrant box ${VAGRANT_BOX_ARTIFACT}"
-(cd "${PROJECT_DIR}/bin"; bash ./qemu2vagrant-box.sh  "${VAGRANT_QEMU_ARTIFACT}" "${VAGRANT_BOX_ARTIFACT}")
+(cd "${PROJECT_DIR}/bin"; bash ./qemu2vagrant.build-box.sh  "${VAGRANT_QEMU_ARTIFACT}" "${VAGRANT_BOX_ARTIFACT}")
 if [ ! -f "${VAGRANT_BOX_ARTIFACT}" ]; then
     echo "failed to build vagrant box ${VAGRANT_BOX_ARTIFACT}"
     exit 1
