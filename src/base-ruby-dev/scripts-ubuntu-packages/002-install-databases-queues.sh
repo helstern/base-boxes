@@ -60,5 +60,5 @@ EOF
 
 apt-get update
 
-apt-get install --yes --force-yes memcached redis-server mysql-server postgresql-9.4 pgadmin3 rabbitmq-server
+apt-get install --yes --force-yes memcached redis-server mysql-server mysql-client-core-5.5 postgresql-9.4 pgadmin3 rabbitmq-server
 
