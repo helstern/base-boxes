@@ -15,7 +15,7 @@ function check_dependencies() {
         return 0
     fi
 
-    echo 'the following commands must be available: sort'
+    echo 'the following commands must be available: sort' 1>&2
     return 1
 }
 
@@ -28,17 +28,17 @@ function assert_dependencies() {
 # check that all required arguments have been passed
 function assert_required_arguments() {
     if [ -z "${BUILD_NAME_PREFIX}" ]; then
-        echo 'prefix parameter must be specified'
+        echo 'prefix parameter must be specified' 1>&2
         exit 2
     fi
 
     if [ -z "${BUILD_NUMBER}" ]; then
-        echo 'build number must be specified'
+        echo 'build number must be specified' 1>&2
         exit 2
     fi
 
     if [ -z "${BUILD_TYPE}" ]; then
-        echo 'build type must be specified'
+        echo 'build type must be specified' 1>&2
         exit 2
     fi
 }
@@ -51,7 +51,7 @@ function parse_arguments() {
             -n|--number)
                 BUILD_NUMBER="${2}"
                 if [  "latest" != "${BUILD_NUMBER}" ]; then
-                    echo 'invalid build number parameter specified'
+                    echo 'invalid build number parameter specified' 1>&2
                     exit 2
                 fi
                 shift
@@ -59,7 +59,7 @@ function parse_arguments() {
             -p|--prefix)
                 BUILD_NAME_PREFIX="${2}"
                 if [ -z "${BUILD_NAME_PREFIX}" ]; then
-                    echo 'invalid prefix parameter specified'
+                    echo 'invalid prefix parameter specified' 1>&2
                     exit 2
                 fi
             ;;
@@ -73,7 +73,7 @@ function parse_arguments() {
             -t|--type)
                 BUILD_TYPE="${2}"
                 if [  -z "${BUILD_TYPE}" ]; then
-                    echo 'invalid build type parameter specified'
+                    echo 'invalid build type parameter specified' 1>&2
                     exit 2
                 fi
                 shift
@@ -88,7 +88,7 @@ function parse_arguments() {
                 break;
             ;;
             -*)
-                echo "invalid parameter ""${1}"
+                echo "invalid parameter ""${1}" 1>&2
                 exit 2
             ;;
         esac
@@ -105,12 +105,14 @@ BUILD_ROOT_DIR="${PROJECT_DIR}/target"
 
 BUILD_DIR=$(find "${BUILD_ROOT_DIR}" -type d -name "${BUILD_NAME_PREFIX}*" | sort --reverse | head -n 1)
 if [ -z "${BUILD_DIR}" ]; then
-  echo "could not find build folder: ${BUILD_ROOT_DIR}/${BUILD_NAME_PREFIX}*"
+  echo "could not find build folder: ${BUILD_ROOT_DIR}/${BUILD_NAME_PREFIX}*" 1>&2
+  exit 1
 fi
 
 BUILD_ARTIFACT=$(find "${BUILD_DIR}" -type f -name "*.${BUILD_TYPE}" | head -n 1)
 if [ -z "${BUILD_ARTIFACT}" ]; then
-    echo "could not find build artifact: ${BUILD_DIR}/*.${BUILD_TYPE}"
+    echo "could not find build artifact: ${BUILD_DIR}/*.${BUILD_TYPE}" 1>&2
+    exit 1
 fi
 
 echo "${BUILD_ARTIFACT}"
