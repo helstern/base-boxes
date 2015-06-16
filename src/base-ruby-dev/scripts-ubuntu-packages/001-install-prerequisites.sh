@@ -11,21 +11,6 @@ fi
 
 echo "install pre-requisites"
 
-#sudo apt-get install --yes build-essential \
-#                            libssl-dev \
-#                            libyaml-dev \
-#                            libreadline-dev \
-#                            openssl \
-#                            curl \
-#                            git-core \
-#                            zlib1g-dev \
-#                            bison \
-#                            libxml2-dev \
-#                            libxslt1-dev \
-#                            libcurl4-openssl-dev \
-#                            libsqlite3-dev \
-#                            sqlite3
-
 apt-get install --yes build-essential \
                             libyaml-dev \
                             libreadline-dev \

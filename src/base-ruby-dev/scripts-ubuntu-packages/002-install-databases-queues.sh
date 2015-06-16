@@ -62,3 +62,25 @@ apt-get update
 
 apt-get install --yes --force-yes memcached redis-server mysql-server mysql-client-core-5.5 postgresql-9.4 pgadmin3 rabbitmq-server
 
+
+# stop memcached from starting up
+echo "manual" >> /etc/init/memcached.override
+sudo update-rc.d memcached disable
+
+
+# stop redis-server from starting up
+echo "manual" >> /etc/init/redis-server.override
+sudo update-rc.d redis-server disable
+
+
+# stop mysql from starting up
+echo "manual" >> /etc/init/mysql.override
+sudo update-rc.d mysql disable
+
+# stop postgresql from starting up
+echo "manual" >> /etc/init/postgresql.override
+sudo update-rc.d postgresql disable
+
+# stop rabbitmq-server from starting up
+echo "manual" >> /etc/init/rabbitmq-server.override
+sudo update-rc.d rabbitmq-server disable
